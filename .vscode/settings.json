@@ -46,6 +46,9 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "xiosbase": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "list": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
     }
 }
