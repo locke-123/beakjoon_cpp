@@ -3,61 +3,69 @@
 using namespace std;
 vector<int> arr;
 int count = 0;
-void merge(vector<int>&arr, int p, int q, int r);
+int res = -1;
+int K;
+void merge(vector<int>&arr, int p, int q, int r, int K);
 
 void merge_sort(vector<int> &arr, int p, int r){
     if(p < r){
         int q = (p+r)/2;
         merge_sort(arr,p,q);
         merge_sort(arr,q+1,r);
-        merge(arr,p,q,r);
+        merge(arr,p,q,r, K);
     }
 }
 
-void merge(vector<int>&arr, int p, int q, int r){
+void merge(vector<int>&arr, int p, int q, int r, int K){
     int i = p; int j = q+1; int t = p;
-    vector<int> tmp(arr);
+    int tmp[arr.size()];
     while (i<=q && j<=r){
-        if(tmp[i] <= tmp[j]){
-            arr[t] = tmp[i];
+        if(arr[i] <= arr[j]){
+            tmp[t] = arr[i];
             t++; i++;
-            
         } else {
-            arr[t] = tmp[j]; t++; j++;
-            for(int num:arr){
-                cout << num << ' ';
-            } cout << '\n';
+            tmp[t] = arr[j];
+            t++; j++;
         }
     }
     while (i <= q)
     {
-        arr[t] = tmp[i]; t++; i++;
-        for(int num:arr){
-            cout << num << ' ';
-        } cout << '\n';
+        tmp[t] = arr[i];
+        t++; i++;
     }
     while (j <= r)
     {
-        arr[t] = tmp[j]; t++; j++;
-        for(int num:arr){
-            cout << num << ' ';
-        } cout << '\n';
+        tmp[t] = arr[j];
+        t++; j++;
+    }
+    i = p;
+    while (i <= r)
+    {
+        count++;
+        if(count == K){
+            res = tmp[i];
+        }
+        arr[i] = tmp[i];
+        i++;
     }
 }
 
 
 int main(){
-    freopen("i.txt", "r", stdin);
-    int N, K, num;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    //freopen("i.txt", "r", stdin);
+    int N, num;
     cin >> N >> K;
     for(int i=0; i<N; i++){
         cin >> num;
         arr.push_back(num);
     }
     merge_sort(arr,0,arr.size()-1);
-    for(int num:arr){
-        cout << num << ' ';
-    }
+    // for(int num:arr){
+    //     cout << num << ' ';
+    // }
+    cout << res;
 
     return 0;
 }
